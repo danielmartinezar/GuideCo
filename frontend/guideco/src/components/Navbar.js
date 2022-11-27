@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import navbarIcon from "../images/navbaricon.png"
 import {
   MDBContainer,
   MDBNavbar,
