@@ -20,7 +20,7 @@ export default function Navbar() {
     <div>
       <MDBNavbar expand="lg" light className="mainNav">
         <MDBContainer fluid>
-          <MDBNavbarBrand href="#">
+          <MDBNavbarBrand href="/">
             <img src={image} height="90" loading="lazy" />
           </MDBNavbarBrand>
           <MDBNavbarToggler
@@ -32,9 +32,10 @@ export default function Navbar() {
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavSecond}>
             <MDBNavbarNav>
-              <MDBNavbarLink active aria-current="page" href="/home">
+              <MDBNavbarLink active aria-current="page" href="/">
                 Home
               </MDBNavbarLink>
+              <MDBNavbarLink  href="/lugares">Lugares</MDBNavbarLink>
               <MDBNavbarLink  href="/rutas">Rutas</MDBNavbarLink>
               <MDBNavbarLink href="/alojamiento">Alojamiento</MDBNavbarLink>
               <MDBNavbarNav className="justify-content-end">

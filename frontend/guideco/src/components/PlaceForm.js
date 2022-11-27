@@ -100,6 +100,7 @@ export default function PlaceForm() {
               municipio: cityState,
               departamento: departmentState,
             };
+            
           }}
         >
           Agregar

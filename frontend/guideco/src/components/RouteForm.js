@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Select from "react-select";
 
@@ -10,6 +10,10 @@ function sortData(data) {
   return sorted;
 }
 export default function RouteForm() {
+  const [nameState, setNameState] = useState(null);
+  const [descriptionState, setDescriptionState] = useState(null);
+  const [optionsState, setOptionsState] = useState([]);
+  const [fileState, setFileState] = useState([]);
   const prueba = [
     {
       id: "abcdefg123",
@@ -41,7 +45,7 @@ export default function RouteForm() {
             placeholder="Ingresa un nombre"
             onChange={(e) => {
               const inputName = e.target.value;
-              //   setNameState(inputName);
+              setNameState(inputName);
             }}
           />
           <Form.Text className="text-muted">
@@ -54,8 +58,8 @@ export default function RouteForm() {
             type="text"
             placeholder="Ingresa una descripción"
             onChange={(e) => {
-              const inputName = e.target.value;
-              //   setNameState(inputName);
+              const inputDescrip = e.target.value;
+              setDescriptionState(inputDescrip);
             }}
           />
           <Form.Text className="text-muted">
@@ -65,11 +69,14 @@ export default function RouteForm() {
         </Form.Group>
         <Select
           isMulti
-          name="colors"
+          name="place"
           options={options}
           className="basic-multi-select"
           classNamePrefix="select"
           placeholder="Selecciona los lugares que incluirás"
+          onChange={(e) => {
+            setOptionsState(Array.prototype.slice.call(e));
+          }}
         />
         <Form.Group controlId="formFileMultiple" className="mb-3 my-4">
           <Form.Label>Elige la imagen de portada</Form.Label>
@@ -77,10 +84,8 @@ export default function RouteForm() {
             type="file"
             accept="image/*"
             onChange={(e) => {
-              //   const files = Array.prototype.slice.call(e.target.files);
-              //   setFileState(files);
-              //   const a = fileState;
-              //   console.log(a);
+              const files = Array.prototype.slice.call(e.target.files[0]);
+              setFileState(files);
             }}
           />
         </Form.Group>
@@ -88,14 +93,18 @@ export default function RouteForm() {
           className="my-3"
           variant="primary"
           type="submit"
-          //   onClick={() => {
-          //     const submitData = {
-          //       nombre: nameState,
-          //       descripcion: descriptionState,
-          //       municipio: cityState,
-          //       departamento: departmentState,
-          //     };
-          //   }}
+          onClick={() => {
+            let lugares = [];
+            optionsState.map((option) => {
+              return lugares.push({ id: option.value });
+            });
+            const submitData = {
+              nombre: nameState,
+              descripcion: descriptionState,
+              imagenes: fileState,
+              lugares
+            };
+          }}
         >
           Agregar
         </Button>
@@ -104,7 +113,11 @@ export default function RouteForm() {
           type="button"
           className="button mx-3 "
           style={{ color: "#CC3300" }}
-          onClick={() => {}}
+          onClick={() => {
+            const submitData = {
+                nombre: nameState,
+            }
+          }}
         >
           Eliminar
         </Button>

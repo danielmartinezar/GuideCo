@@ -9,7 +9,7 @@ export default function SideBar() {
         <nav class="navbar navbar-expand-md navbar-dark bd-dark flex-md-column flex-row align-items-center py-2 text-center sticky-top " id="sidebar">
           <div class="text-center p-3">
             <img src={image} alt="profile picture" class="img-fluid rounded-circle my-4 p-1 d-none d-md-block shadow"/>
-           <a href="#" class="navbar-brand mx-0 font-weight-bold  text-nowrap" style={{color:"#2b5d65"}}>Admin</a>
+           <a class="navbar-brand mx-0 font-weight-bold  text-nowrap" style={{color:"#2b5d65"}}>Admin</a>
           </div>
               <button type="button" class="navbar-toggler border-0 order-1" data-toggle="collapse" data-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@ export default function SideBar() {
               <a href="/admin-ruta" class="nav-link"> Rutas </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link"> Alojamiento </a>
+              <a href="" class="nav-link"> Alojamiento </a>
             </li>
           </ul>
           </div>      
