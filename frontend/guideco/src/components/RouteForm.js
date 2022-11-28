@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Select from "react-select";
-
+import axios from "axios";
 function sortData(data) {
   const sorted = [];
-  data.map((site, index) => {
-    return sorted.push({ value: site.id, label: site.nombre });
+  data.map((place, index) => {
+    return sorted.push({ value: place.id, label: place.nombre });
   });
   return sorted;
 }
-export default function RouteForm() {
+export default async function RouteForm() {
   const [nameState, setNameState] = useState(null);
   const [descriptionState, setDescriptionState] = useState(null);
   const [optionsState, setOptionsState] = useState([]);
   const [fileState, setFileState] = useState([]);
+  let availablePlaces;
+  await axios.get("http://localhost:8083/api/lugar").then((resp) => {
+    availablePlaces = resp.data.body;
+  });
+  console.log(availablePlaces);
+
   const prueba = [
     {
       id: "abcdefg123",
@@ -37,7 +43,15 @@ export default function RouteForm() {
   const options = sortData(prueba);
   return (
     <div>
-      <Form>
+      <Form
+        onSubmit={async () => {
+          const submitData = {
+            nombre: nameState,
+            descripcion: descriptionState,
+          };
+          await axios.post("http://localhost:8082/api/ruta", submitData);
+        }}
+      >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
@@ -102,7 +116,7 @@ export default function RouteForm() {
               nombre: nameState,
               descripcion: descriptionState,
               imagenes: fileState,
-              lugares
+              lugares,
             };
           }}
         >
@@ -115,8 +129,8 @@ export default function RouteForm() {
           style={{ color: "#CC3300" }}
           onClick={() => {
             const submitData = {
-                nombre: nameState,
-            }
+              nombre: nameState,
+            };
           }}
         >
           Eliminar

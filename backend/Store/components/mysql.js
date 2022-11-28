@@ -6,7 +6,7 @@ const dbConf = {
   user: config.DB_USER,
   password: config.DB_PASSWORD,
   database: config.DB_NAME,
-  port:config.MYSQL_PORT,
+  port: config.MYSQL_PORT,
 };
 
 let connection;
@@ -84,5 +84,17 @@ function query(table, q) {
     });
   });
 }
+function joinQuery(table, id, query) {
+  const { joinTable, column1, column2 } = query;
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT * FROM ${table} JOIN ${joinTable} ON ${table}.${column1} = ${joinTable}.${column2} WHERE ${table}.${column1} = ${id}`,
+      (err, res) => {
+        if (err) return reject(err);
+        resolve(res[0] || null);
+      }
+    );
+  });
+}
 
-export default { list, get, remove, upsert, query };
+export default { list, get, remove, upsert, query, joinQuery };

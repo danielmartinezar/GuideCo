@@ -8,6 +8,7 @@ const router = Router();
 
 router.get("/:table", list);
 router.get("/:table/:id", get);
+router.get("/query/:table/:id",joinQuery);
 router.post("/:table", upsert);
 router.put("/:table", upsert);
 router.post("/:table/query", query);
@@ -32,6 +33,12 @@ async function query(req, res, next) {
   const datos = await db.query(req.params.table, req.body.query, req.body.join);
   response.success(req, res, datos, 200);
 }
+
+async function joinQuery(req, res, next) {
+  const datos = await db.joinQuery(req.params.table, req.params.id, req.body.query);
+  response.success(req, res, datos, 200);
+}
+
 async function del(req, res, next) {
     const datos = await db.remove(req.params.table, req.params.id );
     response.success(req, res, datos, 200);

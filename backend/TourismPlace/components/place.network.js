@@ -18,7 +18,7 @@ function list(req, res, next) {
       response.success(req, res, resp.data.body, 200);
     })
     .catch((err) => {
-      response.error(req, res,err.message, 500);
+      response.error(req, res, err.message, 500);
     });
 }
 function get(req, res, next) {
@@ -32,16 +32,8 @@ function get(req, res, next) {
     });
 }
 function insert(req, res, next) {
-  controller
-    .insert(req.body)
-    .then((resp) => {
-      console.log(resp.data);
-      response.success(req, res, resp.data.body, 201);
-    })
-    .catch((err) => {
-      response.error(req, res, err.message, 500);
-      console.error(err);
-    });
+  const idLugar = controller.insert(req.body);
+  res.send({ idLugar });
 }
 function update(req, res, next) {
   controller

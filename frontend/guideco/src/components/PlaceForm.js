@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import axios from "axios";
+
 export default function PlaceForm() {
   const [descriptionState, setDescriptionState] = useState(null);
   const [nameState, setNameState] = useState(null);
   const [addressState, setAddressState] = useState(null);
   const [cityState, setCityState] = useState(null);
   const [departmentState, setDepartmentState] = useState(null);
-  const [fileState, setFileState] = useState([]);
+  const [fileState, setFileState] = useState(null);
+  let file;
+
+  useEffect(() => {
+    file = fileState
+    console.log(file);
+    // setFile(fileState);
+  }, [fileState]);
+
   return (
     <div>
-      <Form>
+      <Form
+        onSubmit={async () => {
+          const submitData = {
+            nombre: nameState,
+            descripcion: descriptionState,
+            direccion: addressState,
+            municipio: cityState,
+            departamento: departmentState,
+          };
+          await axios
+            .post("http://localhost:8083/api/lugar", submitData)
+        }}
+      >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
@@ -82,26 +104,18 @@ export default function PlaceForm() {
         </Form.Group>
         <Form.Group controlId="formFileMultiple" className="mb-3">
           <Form.Label>Elige las imagenes</Form.Label>
-          <Form.Control type="file" multiple accept="image/*" onChange={e=>{
-            const files = Array.prototype.slice.call(e.target.files);
-            setFileState(files);
-            const a = fileState;
-            console.log(a);
-          }}/>
+          <Form.Control
+            multiple
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              setFileState(e.target.files[0]);
+            }}
+          />
         </Form.Group>
         <Button
-          variant="primary"
           type="submit"
-          onClick={() => {
-            const submitData = {
-              nombre: nameState,
-              descripcion: descriptionState,
-              direccion: addressState,
-              municipio: cityState,
-              departamento: departmentState,
-            };
-            
-          }}
+          variant="primary"
         >
           Agregar
         </Button>
